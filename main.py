@@ -1,12 +1,13 @@
 from tkinter import *
-POSSIBLE_OPERATORS = ("+", "-", "÷", "×")
+POSSIBLE_OPERATORS = ("+", "-", "÷", "×", "*", "/")
 POSSIBLE_NUMBERS = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 win = Tk()
 win.config(pady=20, padx=20)
 win.geometry("190x255")
 win.title("Calculator")
 result = ""
-expression = ""
+equation_in_system = ""
+expression_in_output = ""
 insert_oper = True
 
 
@@ -17,45 +18,55 @@ def calculate(equation):
 
 
 def update_output():
-    output.config(text=f"{expression}")
+    output.config(text=f"{expression_in_output}")
 
 
 def add_number(num):
-    global expression, POSSIBLE_OPERATORS, insert_oper
+    global expression_in_output, POSSIBLE_OPERATORS, insert_oper, equation_in_system
     insert_oper = True
     if num in POSSIBLE_OPERATORS:
-        if expression[-1] in POSSIBLE_OPERATORS:
+        if expression_in_output[-1] in POSSIBLE_OPERATORS:
             insert_oper = False
 
         else:
             insert_oper = True
     if insert_oper:
-        expression += num
+        if num == "*":
+            expression_in_output += "×"
+
+        elif num == "//":
+            expression_in_output += "÷"
+
+        else:
+            expression_in_output += num
+        equation_in_system += num
     update_output()
 
 
 def back_space():
-    global expression
-    expression = expression[:len(expression)-1]
+    global expression_in_output, equation_in_system
+    expression_in_output = expression_in_output[:len(expression_in_output) - 1]
+    equation_in_system = equation_in_system[:len(equation_in_system) - 1]
     update_output()
 
 
 def ac():
-    global expression
-    expression = ''
+    global expression_in_output, equation_in_system
+    expression_in_output = ''
+    equation_in_system = ''
     update_output()
 
 
 output = Label(text="", height=2, width=20, anchor=SE, bg="grey")
 output.grid(column=0, row=1, columnspan=500)
 
-equal_button = Button(text="=", width=4, height=5, command=lambda: calculate(expression), border=0)
+equal_button = Button(text="=", width=4, height=5, command=lambda: calculate(equation_in_system), border=0)
 equal_button.grid(column=4, row=5, rowspan=2)
 ac_button = Button(text="AC", width=4, height=2, command=ac, border=0)
 ac_button.grid(column=1, row=2)
-divide_button = Button(text="÷", width=4, height=2, command=lambda: add_number("÷"), border=0)
+divide_button = Button(text="÷", width=4, height=2, command=lambda: add_number("//"), border=0)
 divide_button.grid(column=2, row=2)
-mult_button = Button(text="×", width=4, height=2, command=lambda: add_number("×"), border=0)
+mult_button = Button(text="×", width=4, height=2, command=lambda: add_number("*"), border=0)
 mult_button.grid(column=3, row=2)
 subtract_button = Button(text="-", width=4, height=2, command=lambda: add_number("-"), border=0)
 subtract_button.grid(column=4, row=3)

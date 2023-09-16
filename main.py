@@ -46,13 +46,9 @@ def ac():
     update_output()
 
 
-# logo = Label(text="CALCULATOR", font=("courier", 20, "bold"))
-# logo.grid(column=0, row=0, columnspan=100)
 output = Label(text="", height=2, width=20, anchor=SE, bg="grey")
 output.grid(column=0, row=1, columnspan=500)
 
-# extra = Label(text='', width=4, height=2)
-# extra.grid(column=0, row=0)
 equal_button = Button(text="=", width=4, height=5, command=lambda: calculate(expression), border=0)
 equal_button.grid(column=4, row=5, rowspan=2)
 ac_button = Button(text="AC", width=4, height=2, command=ac, border=0)

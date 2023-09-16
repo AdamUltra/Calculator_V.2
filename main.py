@@ -1,6 +1,6 @@
 from tkinter import *
 POSSIBLE_OPERATORS = ("+", "-", "÷", "×", "*", "/")
-POSSIBLE_NUMBERS = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+POSSIBLE_NUMBERS = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".")
 win = Tk()
 win.config(pady=20, padx=20)
 win.geometry("190x255")
@@ -94,5 +94,6 @@ one_button = Button(text="1", width=4, height=2, command=lambda: add_number("1")
 one_button.grid(column=1, row=5)
 zero_button = Button(text="0", width=4, height=2, command=lambda: add_number("0"), border=0)
 zero_button.grid(column=2, row=6)
-
+decimal_button = Button(text=".", width=4, height=2, command=lambda: add_number("."), border=0)
+decimal_button.grid(column=3, row=6)
 win.mainloop()

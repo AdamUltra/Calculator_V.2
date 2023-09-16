@@ -5,43 +5,14 @@ win = Tk()
 win.config(pady=20, padx=20)
 win.geometry("190x255")
 win.title("Calculator")
-nums = ""
-oper = ""
 result = ""
 expression = ""
 insert_oper = True
-cont_ins = True
 
 
 def calculate(equation):
-    global nums, result, oper
-    result = 0
-    nums = ""
-    oper = ""
-    for i in equation:
-        if i in POSSIBLE_NUMBERS:
-            nums += i
-
-        else:
-
-            if len(oper) == 0:
-                result = int(nums)
-            oper = i
-            nums = ""
-
-        if len(oper) >= 1 and len(nums) >= 1:
-            if oper == "+":
-                result += int(nums)
-
-            elif oper == "-":
-                result -= int(nums)
-
-            elif oper == "×":
-                result *= int(nums)
-
-            elif oper == "÷":
-                result //= int(nums)
-
+    global result
+    result = eval(f"{equation}")
     output.config(text=f"{result}")
 
 

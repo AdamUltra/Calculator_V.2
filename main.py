@@ -1,7 +1,7 @@
 from tkinter import *
 import math
 POSSIBLE_OPERATORS = ("+", "-", "÷", "×", "*", "/")
-SPECIAL_OPERATORS = ("cos(")
+SPECIAL_OPERATORS = ("cos(", "sin(")
 POSSIBLE_NUMBERS = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".")
 win = Tk()
 win.config(pady=20, padx=20)
@@ -10,14 +10,20 @@ win.title("Calculator")
 result = ""
 cos = ""
 cos_num = ""
+sin = ""
+sin_num = ""
+tan = ""
+tan_num = ""
 equation_in_system = ""
 expression_in_output = ""
 insert_oper = True
 
 
 def calculate(equation):
-    global result, cos, cos_num, equation_in_system
+    global result, cos, cos_num, equation_in_system, sin, sin_num, tan, tan_num
     cos_num = ""
+    sin_num = ""
+    tan_num = ""
     for num in equation:
         if num == "c":
             cos = equation[equation.index(num):equation.index(")") + 1]
@@ -26,6 +32,24 @@ def calculate(equation):
                     cos_num += i
             cos_num = str(math.cos(int(cos_num)))
             equation = equation.replace(cos, cos_num)
+            equation_in_system = equation
+
+        elif num == "s":
+            sin = equation[equation.index(num):equation.index(")") + 1]
+            for i in sin:
+                if i in POSSIBLE_NUMBERS:
+                    sin_num += i
+            sin_num = str(math.sin(int(sin_num)))
+            equation = equation.replace(sin, sin_num)
+            equation_in_system = equation
+
+        elif num == "t":
+            tan = equation[equation.index(num):equation.index(")") + 1]
+            for i in tan:
+                if i in POSSIBLE_NUMBERS:
+                    tan_num += i
+            tan_num = str(math.tan(int(tan_num)))
+            equation = equation.replace(tan, tan_num)
             equation_in_system = equation
 
     result = eval(f"{equation}")
@@ -114,8 +138,12 @@ decimal_button = Button(text=".", width=4, height=2, command=lambda: add_number(
 decimal_button.grid(column=3, row=6)
 percent_button = Button(text="%", width=4, height=2, command=lambda: add_number("%"), border=0)
 percent_button.grid(column=1, row=6)
-cos_button = Button(text="cos", width=4, height=2, command=lambda: add_number("cos("), border=0)
-cos_button.grid(column=5, row=3)
 brackets_button = Button(text=")", width=4, height=2, command=lambda: add_number(")"), border=0)
 brackets_button.grid(column=5, row=2)
+cos_button = Button(text="cos", width=4, height=2, command=lambda: add_number("cos("), border=0)
+cos_button.grid(column=5, row=3)
+sin_button = Button(text="sin", width=4, height=2, command=lambda: add_number("sin("), border=0)
+sin_button.grid(column=5, row=4)
+tan_button = Button(text="tan", width=4, height=2, command=lambda: add_number("tan("), border=0)
+tan_button.grid(column=5, row=5)
 win.mainloop()

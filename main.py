@@ -1,18 +1,33 @@
 from tkinter import *
+import math
 POSSIBLE_OPERATORS = ("+", "-", "÷", "×", "*", "/")
+SPECIAL_OPERATORS = ("cos(")
 POSSIBLE_NUMBERS = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".")
 win = Tk()
 win.config(pady=20, padx=20)
-win.geometry("190x255")
+win.geometry("220x255")
 win.title("Calculator")
 result = ""
+cos = ""
+cos_num = ""
 equation_in_system = ""
 expression_in_output = ""
 insert_oper = True
 
 
 def calculate(equation):
-    global result
+    global result, cos, cos_num, equation_in_system
+    cos_num = ""
+    for num in equation:
+        if num == "c":
+            cos = equation[equation.index(num):equation.index(")") + 1]
+            for i in cos:
+                if i in POSSIBLE_NUMBERS:
+                    cos_num += i
+            cos_num = str(math.cos(int(cos_num)))
+            equation = equation.replace(cos, cos_num)
+            equation_in_system = equation
+
     result = eval(f"{equation}")
     output.config(text=f"{result}")
 
@@ -30,6 +45,7 @@ def add_number(num):
 
         else:
             insert_oper = True
+
     if insert_oper:
         if num == "*":
             expression_in_output += "×"
@@ -57,7 +73,7 @@ def ac():
     update_output()
 
 
-output = Label(text="", height=2, width=20, anchor=SE, bg="grey")
+output = Label(text="", height=2, width=23, anchor=SE, bg="grey")
 output.grid(column=0, row=1, columnspan=500)
 
 equal_button = Button(text="=", width=4, height=5, command=lambda: calculate(equation_in_system), border=0)
@@ -96,4 +112,10 @@ zero_button = Button(text="0", width=4, height=2, command=lambda: add_number("0"
 zero_button.grid(column=2, row=6)
 decimal_button = Button(text=".", width=4, height=2, command=lambda: add_number("."), border=0)
 decimal_button.grid(column=3, row=6)
+percent_button = Button(text="%", width=4, height=2, command=lambda: add_number("%"), border=0)
+percent_button.grid(column=1, row=6)
+cos_button = Button(text="cos", width=4, height=2, command=lambda: add_number("cos("), border=0)
+cos_button.grid(column=5, row=3)
+brackets_button = Button(text=")", width=4, height=2, command=lambda: add_number(")"), border=0)
+brackets_button.grid(column=5, row=2)
 win.mainloop()

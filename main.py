@@ -2,16 +2,17 @@ from tkinter import *
 import math
 POSSIBLE_OPERATORS = ("+", "-", "÷", "×", "*", "/")
 POSSIBLE_NUMBERS = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".")
-win = Tk()
-win.config(pady=20, padx=20)
-win.geometry("220x255")
-win.title("Calculator")
 result = ""
 special = ""
 special_num = ""
 equation_in_system = ""
 expression_in_output = ""
 insert_oper = True
+
+win = Tk()
+win.config(pady=20, padx=20)
+win.geometry("220x255")
+win.title("Calculator")
 
 
 def calculate(equation):

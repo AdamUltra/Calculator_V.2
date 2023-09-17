@@ -26,13 +26,13 @@ def calculate(equation):
                     special_num += i
 
             if num == "c":
-                special_num = str(math.cos(int(special_num)))
+                special_num = str(math.cos(float(special_num)))
 
             elif num == "s":
-                special_num = str(math.sin(int(special_num)))
+                special_num = str(math.sin(float(special_num)))
 
             elif num == "t":
-                special_num = str(math.tan(int(special_num)))
+                special_num = str(math.tan(float(special_num)))
 
             equation = equation.replace(special, special_num)
             equation_in_system = equation

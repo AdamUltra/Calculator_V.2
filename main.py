@@ -1,56 +1,44 @@
 from tkinter import *
 import math
 POSSIBLE_OPERATORS = ("+", "-", "÷", "×", "*", "/")
-SPECIAL_OPERATORS = ("cos(", "sin(")
 POSSIBLE_NUMBERS = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".")
 win = Tk()
 win.config(pady=20, padx=20)
 win.geometry("220x255")
 win.title("Calculator")
 result = ""
-cos = ""
-cos_num = ""
-sin = ""
-sin_num = ""
-tan = ""
-tan_num = ""
+special = ""
+special_num = ""
 equation_in_system = ""
 expression_in_output = ""
 insert_oper = True
 
 
 def calculate(equation):
-    global result, cos, cos_num, equation_in_system, sin, sin_num, tan, tan_num
-    cos_num = ""
-    sin_num = ""
-    tan_num = ""
-    for num in equation:
-        if num == "c":
-            cos = equation[equation.index(num):equation.index(")") + 1]
-            for i in cos:
+    global result, equation_in_system, special, special_num
+    special_num = ""
+    try:
+        for num in equation:
+
+            special = equation[equation.index(num):equation.index(")") + 1]
+            for i in special:
                 if i in POSSIBLE_NUMBERS:
-                    cos_num += i
-            cos_num = str(math.cos(int(cos_num)))
-            equation = equation.replace(cos, cos_num)
+                    special_num += i
+
+            if num == "c":
+                special_num = str(math.cos(int(special_num)))
+
+            elif num == "s":
+                special_num = str(math.sin(int(special_num)))
+
+            elif num == "t":
+                special_num = str(math.tan(int(special_num)))
+
+            equation = equation.replace(special, special_num)
             equation_in_system = equation
 
-        elif num == "s":
-            sin = equation[equation.index(num):equation.index(")") + 1]
-            for i in sin:
-                if i in POSSIBLE_NUMBERS:
-                    sin_num += i
-            sin_num = str(math.sin(int(sin_num)))
-            equation = equation.replace(sin, sin_num)
-            equation_in_system = equation
-
-        elif num == "t":
-            tan = equation[equation.index(num):equation.index(")") + 1]
-            for i in tan:
-                if i in POSSIBLE_NUMBERS:
-                    tan_num += i
-            tan_num = str(math.tan(int(tan_num)))
-            equation = equation.replace(tan, tan_num)
-            equation_in_system = equation
+    except ValueError:
+        pass
 
     result = eval(f"{equation}")
     output.config(text=f"{result}")
